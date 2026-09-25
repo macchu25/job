@@ -1,157 +1,302 @@
-# BÁO CÁO CHI TIẾT KẾT QUẢ THỰC HIỆN TASK 01
+# 📊 BÁO CÁO KỸ THUẬT: TASK 01 - INITIALIZE PROJECT & HMI BASELINE
 
-## 📌 THÔNG TIN TASK
-- **Tên Task:** TASK 01 - INITIALIZE PROJECT & BASELINE HMI DASHBOARD
-- **Hệ thống:** Phân loại hàng tự động công nghiệp (Industrial Package Sorting HMI System)
-- **Ngày hoàn thành:** 25/09/2026
-- **Trạng thái:** 🟢 HOÀN THÀNH (Completed & Verified)
-- **Repository Git:** [https://github.com/macchu25/job.git](https://github.com/macchu25/job.git) (Branch `main`)
+<div align="center">
 
----
+![Status: Completed](https://img.shields.io/badge/Status-Completed-22c55e?style=for-the-badge&logo=checkmarx&logoColor=white)
+![Frontend: React 19](https://img.shields.io/badge/Frontend-React%2019%20%7C%20TS-61DAFB?style=for-the-badge&logo=react&logoColor=black)
+![Styling: Tailwind CSS v4](https://img.shields.io/badge/Styling-Tailwind%20CSS%20v4-38BDF8?style=for-the-badge&logo=tailwindcss&logoColor=white)
+![Backend: Express TS](https://img.shields.io/badge/Backend-Express%20%7C%20Node.js-000000?style=for-the-badge&logo=express&logoColor=white)
+![Repo: GitHub](https://img.shields.io/badge/Repo-GitHub%20Main-181717?style=for-the-badge&logo=github&logoColor=white)
 
-## 🎯 YÊU CẦU ĐỀ BÀI (REQUIREMENTS)
+<p align="center">
+  <b>Hệ Thống Web HMI Giám Sát & Điều Khiển Dây Chuyền Phân Loại Hàng Hóa Tự Động</b>
+</p>
 
-| STT | Yêu Cầu | Trạng Thái | Chi Tiết Thực Hiện |
-|---|---|---|---|
-| 1 | Khởi tạo cấu trúc dự án `frontend/`, `backend/`, `README.md` | 🟢 Hoàn thành | Thiết lập Npm Workspaces với root workspace runner. |
-| 2 | Frontend chạy port `3000` | 🟢 Hoàn thành | Cấu hình Vite React TS server port `3000`. |
-| 3 | Backend chạy port `3001` | 🟢 Hoàn thành | Cấu hình Express TS server port `3001`. |
-| 4 | Backend bind host `0.0.0.0` (không chỉ localhost) | 🟢 Hoàn thành | `app.listen(3001, '0.0.0.0')`. |
-| 5 | Endpoint `GET /api/health` trả về `{"status": "ok"}` | 🟢 Hoàn thành | Khai báo route Express và test thành công. |
-| 6 | Frontend kết nối API thành công hiển thị "Backend Connected" | 🟢 Hoàn thành | Polling API, hiển thị Badge "Backend Connected" thời gian thực. |
-| 7 | Tạo file `.env.example` | 🟢 Hoàn thành | Tạo tại root, `frontend/`, và `backend/`. |
-| 8 | Hướng dẫn trong `README.md` với `npm install` và `npm run dev` | 🟢 Hoàn thành | Viết tài liệu README chuẩn hóa quy trình 2 bước. |
-| 9 | Chuẩn hóa giao diện HMI theo mẫu thiết kế chuẩn | 🟢 Hoàn thành | Xây dựng Dashboard công nghiệp hoàn chỉnh với 4 KPI, sơ đồ 3D Isometric, biểu đồ Uptime, bảng dữ liệu. |
-| 10| Push dự án lên Git Remote | 🟢 Hoàn thành | Đã commit & push lên branch `main` tại GitHub repository `macchu25/job`. |
+</div>
 
 ---
 
-## 🏗️ CẤU TRÚC DỰ ÁN (PROJECT STRUCTURE)
+> [!NOTE]
+> **Tóm tắt:** Task 01 tập trung khởi tạo toàn bộ nền tảng cốt lõi (Core Baseline Architecture), thiết lập hệ thống giao tiếp Client - Server hai chiều, cấu hình mạng mở (`0.0.0.0`), và chuẩn hóa giao diện Web HMI theo phong cách Industrial Dark Theme với 4 chỉ số KPI, sơ đồ nhiệt mặt bằng 3D và biểu đồ xu hướng vận hành.
+
+---
+
+## 🧭 MỤC LỤC NHANH (TABLE OF CONTENTS)
+1. [Thông Tin & Chỉ Tiêu Đạt Được](#1-thông-tin--chỉ-tiêu-đạt-được)
+2. [Sơ Đồ Kiến Trúc Hệ Thống (Architecture Flow)](#2-sơ-đồ-kiến-trúc-hệ-thống)
+3. [Cấu Trúc Thư Mục Chuẩn (Project Structure)](#3-cấu-trúc-thư-mục-chuẩn)
+4. [Mô Tả Giao Diện Chuẩn (Standard UI Specifications)](#4-mô-tả-giao-diện-chuẩn)
+5. [Chi Tiết Kỹ Thuật Mã Nguồn (Code Implementation)](#5-chi-tiết-kỹ-thuật-mã-nguồn)
+6. [Nhật Ký Kiểm Thử Thực Tế (Testing & Verification Logs)](#6-nhật-ký-kiểm-thử-thực-tế)
+7. [Quản Lý Phiên Bản Git (Git Version Control)](#7-quản-lý-phiên-bản-git)
+
+---
+
+## 1. THÔNG TIN & CHỈ TIÊU ĐẠT ĐƯỢC
+
+### 📌 Bảng Đối Chiếu Yêu Cầu (Requirements Compliance)
+
+| STT | Yêu Cầu Kỹ Thuật | Cổng / Địa Chỉ | Trạng Thái | Chi Tiết Nghiệm Thu |
+| :---: | :--- | :---: | :---: | :--- |
+| **01** | Khởi tạo cấu trúc `frontend/`, `backend/`, `README.md` | Root | <kbd>🟢 PASSED</kbd> | Hoàn thành với Npm Workspaces runner. |
+| **02** | Frontend chạy trên cổng chuẩn HMI | `Port 3000` | <kbd>🟢 PASSED</kbd> | Vite Dev Server lắng nghe `http://localhost:3000`. |
+| **03** | Backend API chạy trên cổng riêng biệt | `Port 3001` | <kbd>🟢 PASSED</kbd> | Express Server lắng nghe `http://localhost:3001`. |
+| **04** | Backend bind IP mở cho mọi card mạng | `0.0.0.0` | <kbd>🟢 PASSED</kbd> | `app.listen(3001, '0.0.0.0')` cho phép truy cập từ mạng LAN/PLC. |
+| **05** | Endpoint kiểm tra sức khỏe `GET /api/health` | `/api/health` | <kbd>🟢 PASSED</kbd> | Trả về payload chuẩn JSON `{ "status": "ok" }`. |
+| **06** | Frontend hiển thị trạng thái kết nối Backend | UI Header | <kbd>🟢 PASSED</kbd> | Nhãn **`Backend Connected`** kèm đèn tín hiệu xung xanh (pulse). |
+| **07** | Bộ cấu hình mẫu môi trường `.env.example` | Root / Sub | <kbd>🟢 PASSED</kbd> | Đầy đủ file cấu hình ở thư mục gốc, backend và frontend. |
+| **08** | Tài liệu hướng dẫn thao tác `npm install`, `npm run dev` | Root | <kbd>🟢 PASSED</kbd> | Hướng dẫn 2 bước khởi động đồng bộ cả 2 dịch vụ. |
+| **09** | Chuẩn hóa toàn bộ UI theo thiết kế tham chiếu chuẩn | Layout HMI | <kbd>🟢 PASSED</kbd> | Hoàn thiện Dark Theme, 4 thẻ KPI, Sơ đồ 3D và Biểu đồ Trend. |
+| **10** | Đồng bộ hóa toàn bộ mã nguồn lên kho lưu trữ từ xa | Git Remote | <kbd>🟢 PASSED</kbd> | Đã push thành công lên GitHub branch `main`. |
+
+---
+
+## 2. SƠ ĐỒ KIẾN TRÚC HỆ THỐNG
+
+Dưới đây là sơ đồ luồng dữ liệu và phân tách kiến trúc giữa Frontend HMI và Backend Controller:
+
+```mermaid
+flowchart TD
+    subgraph ClientLayer ["🖥️ TẦNG GIAO DIỆN (CLIENT LAYER - PORT 3000)"]
+        UI["Web HMI Dashboard\n(React 19 + Tailwind CSS)"]
+        Sidebar["Sidebar Điều Hướng\n(Dashboard, Grid, Logs, Settings)"]
+        KPICards["4 Thẻ Chỉ Số KPI\n(Utilization, Performance, Availability, OEE)"]
+        FloorMap["3D Isometric Plant Layout\n(5 Hotspots Năng Lượng Máy)"]
+        UptimeChart["Biểu Đồ Xu Hướng Uptime\n(Target vs Actual Spline)"]
+        TableData["Bảng Dữ Liệu Tốc Độ Phân Loại\n(Conveyor & Carton Speeds)"]
+        DiagModal["Modal Chẩn Đoán Hệ Thống\n(API Health Inspector)"]
+    end
+
+    subgraph TransportLayer ["🌐 TẦNG GIAO TIẾP MẠNG (HTTP REST / JSON)"]
+        Req["GET /api/health"]
+        Res["HTTP 200 OK: {'status': 'ok'}"]
+    end
+
+    subgraph ServerLayer ["⚙️ TẦNG DỊCH VỤ (BACKEND LAYER - 0.0.0.0:3001)"]
+        ExpressApp["Express Application Core\n(Node.js + TypeScript + tsx)"]
+        CorsMiddleware["CORS Handler (Origin: *)"]
+        EnvConfig["Environment Loader (dotenv)"]
+        HealthRoute["Health Check Controller"]
+    end
+
+    subgraph FutureLayer ["🔌 TẦNG MỞ RỘNG TƯƠNG LAI (PHASE 2+)"]
+        PLC["PLC Driver (Modbus / S7 / OPC-UA)"]
+        Sim["Simulation Engine"]
+    end
+
+    UI --> Sidebar
+    UI --> KPICards
+    UI --> FloorMap
+    UI --> UptimeChart
+    UI --> TableData
+    UI --> DiagModal
+
+    UI -- "Tự động Polling (10s)" --> Req
+    Req --> CorsMiddleware
+    CorsMiddleware --> ExpressApp
+    ExpressApp --> HealthRoute
+    HealthRoute --> Res
+    Res -- "Cập nhật Badge 'Backend Connected'" --> UI
+
+    ExpressApp -. "Dự kiến tích hợp" .-> PLC
+    ExpressApp -. "Dự kiến tích hợp" .-> Sim
+
+    style UI fill:#0f172a,stroke:#22c55e,stroke-width:2px,color:#fff
+    style ExpressApp fill:#0f172a,stroke:#38bdf8,stroke-width:2px,color:#fff
+    style Req fill:#1e293b,stroke:#e2e8f0,stroke-width:1px,color:#38bdf8
+    style Res fill:#1e293b,stroke:#22c55e,stroke-width:1px,color:#22c55e
+```
+
+---
+
+## 3. CẤU TRÚC THƯ MỤC CHUẨN
 
 ```text
-job/
-├── docs/
-│   └── TASK_01_INITIALIZE_PROJECT.md   # Báo cáo chi tiết Task 01 (File này)
-├── frontend/                            # Module Giao diện Web HMI
-│   ├── public/
-│   │   └── isometric_sorting_plant.jpg  # Hình ảnh 3D sơ đồ mặt bằng nhà máy phân loại
-│   ├── src/
-│   │   ├── App.tsx                      # Giao diện HMI Dashboard chuẩn mẫu thiết kế
-│   │   ├── main.tsx                     # Entry point React 19
-│   │   ├── index.css                    # Tailwind CSS v4 styling
-│   │   └── vite-env.d.ts                # TypeScript definition cho Vite env
-│   ├── index.html                       # HTML5 semantic template
-│   ├── vite.config.ts                   # Cấu hình Vite server (port 3000, host 0.0.0.0)
-│   ├── tsconfig.json                    # Cấu hình TypeScript frontend
-│   └── .env.example                     # Biến môi trường mẫu frontend
-├── backend/                             # Module Server API
-│   ├── src/
-│   │   └── index.ts                     # Express server (/api/health, host 0.0.0.0, port 3001)
-│   ├── tsconfig.json                    # Cấu hình TypeScript backend
-│   └── .env.example                     # Biến môi trường mẫu backend
-├── .env.example                         # Biến môi trường tổng quan
-├── .gitignore                           # Danh mục bỏ qua kiểm soát Git
-├── package.json                         # Root package configuration (Workspaces & Concurrently)
-├── package-lock.json                    # Npm lockfile
-└── README.md                            # Tài liệu hướng dẫn dự án
+c:\job\
+├── 📂 docs/                               # Hồ sơ kỹ thuật và tài liệu báo cáo Task
+│   └── TASK_01_INITIALIZE_PROJECT.md      # Tài liệu tổng hợp Task 01
+├── 📂 frontend/                           # Client Web HMI ứng dụng React + Vite
+│   ├── 📂 public/
+│   │   └── isometric_sorting_plant.jpg   # Ảnh đồ họa 3D mặt bằng phân loại hàng
+│   ├── 📂 src/
+│   │   ├── App.tsx                       # Dashboard HMI trung tâm hoàn chỉnh
+│   │   ├── main.tsx                      # Điểm khởi chạy React DOM 19
+│   │   ├── index.css                     # Cấu hình Tailwind CSS v4
+│   │   └── vite-env.d.ts                 # Khai báo kiểu môi trường Vite
+│   ├── index.html                        # Khung HTML gốc chuẩn SEO & typography
+│   ├── vite.config.ts                    # Cấu hình cổng 3000 & bind 0.0.0.0
+│   ├── tsconfig.json                     # Cấu hình TypeScript Frontend
+│   └── .env.example                      # Mẫu biến môi trường Frontend
+├── 📂 backend/                            # Server Node.js Express REST API
+│   ├── 📂 src/
+│   │   └── index.ts                      # Server Express, bind 0.0.0.0:3001
+│   ├── tsconfig.json                     # Cấu hình TypeScript Backend
+│   └── .env.example                      # Mẫu biến môi trường Backend
+├── .env.example                          # Tổng hợp cấu hình môi trường toàn hệ thống
+├── .gitignore                            # Danh sách loại trừ node_modules, build & env
+├── package.json                          # Npm Workspace runner & lệnh concurrently
+├── package-lock.json                     # Cố định phiên bản dependency cây thư mục
+└── README.md                             # Tài liệu tổng quan & hướng dẫn sử dụng nhanh
 ```
 
 ---
 
-## 💻 CHI TIẾT THỰC HIỆN KỸ THUẬT (TECHNICAL IMPLEMENTATION)
+## 4. MÔ TẢ GIAO DIỆN CHUẨN (STANDARD UI SPECIFICATIONS)
 
-### 1. Backend API (`backend/src/index.ts`)
-- **Công nghệ:** Node.js, Express, TypeScript, `tsx`, `cors`, `dotenv`.
-- **Mã nguồn chính:**
-  ```typescript
-  import express, { Request, Response } from 'express';
-  import cors from 'cors';
-  import dotenv from 'dotenv';
+Giao diện Web HMI được thiết kế theo phong cách hiện đại chuyên dụng cho môi trường giám sát công nghiệp:
 
-  dotenv.config();
-
-  const app = express();
-  const PORT = process.env.PORT || 3001;
-  const HOST = process.env.HOST || '0.0.0.0';
-
-  app.use(cors({ origin: '*' }));
-  app.use(express.json());
-
-  app.get('/api/health', (req: Request, res: Response) => {
-    res.json({ status: 'ok' });
-  });
-
-  app.listen(Number(PORT), HOST, () => {
-    console.log(`[Backend] Server running on http://${HOST}:${PORT}`);
-  });
-  ```
-
-### 2. Frontend HMI Dashboard (`frontend/src/App.tsx`)
-- **Công nghệ:** React 19, TypeScript, Tailwind CSS v4, Lucide React Icons.
-- **Các thành phần giao diện chuẩn hóa theo mẫu reference:**
-  - **Left Sidebar:** Dark navigation bar với logo xanh lá, active state pill, các icon điều hướng (Dashboard, Production Grid, Operators, Schedule, Logs & Alerts, Reports, Settings, Logout).
-  - **Top Navigation Bar:**
-    - Tiêu đề **Dashboard** & Menu toggle.
-    - Status Badge thời gian thực: **`Backend Connected`** (gọi API `/api/health` thành công).
-    - Bộ chọn khoảng thời gian (`May 1 2024 10:00 - Now`).
-    - Bộ chọn dây chuyền (`Carton Production Line`).
-    - Công cụ điều khiển: Fullscreen (`⤢`), Refresh (`↻`), Pause/Play (`⏸`/`▶`).
-  - **Top KPI Cards (4 thẻ chỉ số):**
-    - `75.1%` Utilization (Hiệu suất sử dụng)
-    - `98.5%` Performance (Tốc độ vận hành)
-    - `78.6%` Availability (Độ khả dụng)
-    - `84.3%` OEE (Hiệu suất thiết bị tổng thể)
-  - **Sơ Đồ 3D Mặt Bằng & Tiêu Thụ Năng Lượng (Machine Energy Consumption):**
-    - Hiển thị hình ảnh 3D Isometric mặt bằng phân loại hàng.
-    - 5 nút tương tác Hotspot Node nổi trực tiếp trên vị trí thiết bị:
-      - `15.76 kWh/t` (Conveyor)
-      - `78.59 kWh/t` (Carton Sorter)
-      - `91.64 kWh/t` (Mixer Arm)
-      - `16.10 kWh/t` (Soap Line)
-      - `14.97 kWh/t` (Machine Main)
-  - **Biểu Đồ Xu Hướng Hoạt Động (Machine Uptime Trend Chart):**
-    - Biểu đồ SVG đường cong mượt mượt (Target Line màu xanh lá & Actual Line màu vàng hổ phách).
-    - Tooltip nổi chỉ số điểm đỉnh: `99% May 9`.
-  - **Bảng Dữ Liệu Sản Xuất (Bottom Data Table):**
-    - Header bảng màu xanh lá chuẩn thiết kế.
-    - Cột ngày/giờ cyan dạng link (`2024-05-05 10:00`, ...).
-    - Chi tiết chỉ số tốc độ trung bình, tốc độ tối đa của Băng tải & Thùng carton, cùng tỷ lệ hoàn thành ca (`Shift achievement`).
-
----
-
-## 🧪 KIỂM THỬ VÀ XÁC MINH (VERIFICATION & TESTING)
-
-### 1. Kiểm tra Biên dịch Code (Build Test)
-Đã thực hiện lệnh biên dịch toàn bộ TypeScript và Vite bundle:
-```bash
-npm run build
+### 🌟 1. Top 4 Thẻ Chỉ Số KPI
+```text
+┌──────────────────┐  ┌──────────────────┐  ┌──────────────────┐  ┌──────────────────┐
+│      75.1%       │  │      98.5%       │  │      78.6%       │  │      84.3%       │
+│   UTILIZATION    │  │   PERFORMANCE    │  │   AVAILABILITY   │  │       OEE        │
+└──────────────────┘  └──────────────────┘  └──────────────────┘  └──────────────────┘
 ```
-- **Kết quả:** Code backend (`tsc`) và frontend (`vite build`) biên dịch thành công 100%, code exit `0`, không có lỗi lint hay type mismatch.
+- Số liệu hiển thị kích thước lớn với màu xanh lá phản quang (**Emerald-400**), hiệu ứng hover phóng to nhẹ tinh tế.
 
-### 2. Kiểm tra Kết Nối API & Trạng Thái Server (Runtime Test)
-Đã khởi chạy dịch vụ và gọi trực tiếp endpoint:
-- `http://localhost:3001/api/health` ➡️ Phản hồi: `{"status": "ok"}`
-- `http://localhost:3000` ➡️ Phản hồi: `HTTP 200 OK`
+### 🏭 2. Sơ Đồ Tiêu Thụ Năng Lượng 3D (Machine Energy Consumption)
+- **Hình nền:** Đồ họa 3D Isometric độ phân giải cao mô phỏng dây chuyền phân loại, cánh tay robot và hệ thống băng chuyền.
+- **Hotspot Nodes:** 5 điểm nút năng lượng động gắn định vị trực tiếp trên các cụm máy:
+  1. `15.76 kWh/t` - Băng tải nạp liệu (**Conveyor**)
+  2. `78.59 kWh/t` - Trạm phân loại thùng carton (**Carton Sorter**)
+  3. `91.64 kWh/t` - Tay gắp chuyển làn (**Mixer Arm**)
+  4. `16.10 kWh/t` - Cụm kiểm tra đích đến (**Soap Line**)
+  5. `14.97 kWh/t` - Khung máy chính (**Main Machine Base**)
 
-### 3. Kiểm tra Trình Duyệt Thực Tế (Browser Visual Inspection)
-- Trình duyệt truy cập `http://localhost:3000` hiển thị chính xác giao diện HMI chuẩn mẫu.
-- Badge trạng thái góc trên hiển thị: **`Backend Connected`**.
+### 📈 3. Biểu Đồ Thời Gian Hoạt Động (Machine Uptime Trend)
+- Đường cong Spline SVG mượt mà gồm 2 đường xu hướng:
+  - **Đường Xanh Lá:** Chỉ số mục tiêu vận hành (**Target Line**).
+  - **Đường Vàng Cam:** Chỉ số đo đạc thực tế (**Actual Line**).
+  - **Điểm nhấn đỉnh cao:** Huy hiệu Tooltip định vị trực tiếp tại ngày May 9 đạt **`99%`**.
+
+### 📊 4. Bảng Dữ Liệu Tốc Độ Sản Xuất (Sorting Speed Table)
+- Thiết kế thanh lịch với font số kỹ thuật Mono.
+- Cột mốc thời gian màu xanh Cyan nổi bật (`2024-05-05 10:00`, `09:00`, `08:00`...).
+- Phân tích chi tiết: Tốc độ trung bình / Tối đa của Băng tải, Carton và Phần trăm đạt mục tiêu ca (**Shift achievement**).
+
+---
+
+## 5. CHI TIẾT KỸ THUẬT MÃ NGUỒN
+
+<details>
+<summary><b>🔍 Xem Mã Nguồn Backend Server: <code>backend/src/index.ts</code></b></summary>
+
+```typescript
+import express, { Request, Response } from 'express';
+import cors from 'cors';
+import dotenv from 'dotenv';
+
+dotenv.config();
+
+const app = express();
+const PORT = process.env.PORT || 3001;
+const HOST = process.env.HOST || '0.0.0.0';
+
+// Cấu hình CORS mở cho phép Client truy cập linh hoạt
+app.use(cors({ origin: '*' }));
+app.use(express.json());
+
+// Endpoint kiểm tra sức khỏe hệ thống
+app.get('/api/health', (req: Request, res: Response) => {
+  res.json({ status: 'ok' });
+});
+
+// Lắng nghe trên 0.0.0.0 để kết nối xuyên mạng
+app.listen(Number(PORT), HOST, () => {
+  console.log(`[Backend] Server is running on http://${HOST}:${PORT}`);
+  console.log(`[Backend] Health check endpoint: http://${HOST}:${PORT}/api/health`);
+});
+```
+</details>
+
+<details>
+<summary><b>🔍 Xem Cấu Hình Khởi Động Đồng Thời: <code>package.json</code></b></summary>
+
+```json
+{
+  "name": "sorting-system-hmi",
+  "version": "1.0.0",
+  "private": true,
+  "workspaces": [
+    "frontend",
+    "backend"
+  ],
+  "scripts": {
+    "dev": "concurrently -k -p \"[{name}]\" -n \"backend,frontend\" -c \"yellow.bold,cyan.bold\" \"npm run dev --prefix backend\" \"npm run dev --prefix frontend\"",
+    "dev:backend": "npm run dev --prefix backend",
+    "dev:frontend": "npm run dev --prefix frontend",
+    "build": "npm run build --prefix backend && npm run build --prefix frontend"
+  },
+  "devDependencies": {
+    "concurrently": "^9.1.2"
+  }
+}
+```
+</details>
 
 ---
 
-## 📤 QUẢN LÝ MÃ NGUỒN GIT (GIT VERSION CONTROL)
+## 6. NHẬT KÝ KIỂM THỬ THỰC TẾ
 
-- **Các tập tin đã commit:** Toàn bộ mã nguồn `frontend/`, `backend/`, `.env.example`, `package.json`, `README.md`, `docs/TASK_01_INITIALIZE_PROJECT.md`.
-- **Cấu hình Git Remote:** `https://github.com/macchu25/job.git`
-- **Lệnh đã thực hiện:**
-  ```bash
-  git add .
-  git commit -m "feat: initialize Web HMI package sorting system baseline with standard dashboard UI"
-  git branch -M main
-  git remote add origin https://github.com/macchu25/job.git
-  git push -u origin main
-  ```
-- **Kết quả:** Đã đẩy nhánh `main` thành công lên kho lưu trữ GitHub.
+> [!IMPORTANT]
+> Toàn bộ quá trình kiểm thử đều được thực hiện tự động bằng các câu lệnh thực thi và kiểm tra trực tiếp trên môi trường chạy thực tế.
+
+### ⚡ 1. Kết Quả Kiểm Tra Biên Dịch (`npm run build`)
+```text
+> sorting-system-hmi@1.0.0 build
+> npm run build --prefix backend && npm run build --prefix frontend
+
+> sorting-system-backend@1.0.0 build
+> tsc
+
+> sorting-system-frontend@1.0.0 build
+> tsc -b && vite build
+
+vite v6.4.3 building for production...
+transforming...
+✓ 1590 modules transformed.
+rendering chunks...
+computing gzip size...
+dist/index.html                   0.86 kB │ gzip:  0.51 kB
+dist/assets/index-BeNZcfDi.css   38.19 kB │ gzip:  7.01 kB
+dist/assets/index-DTN9GCp1.js   259.90 kB │ gzip: 76.54 kB
+✓ built in 1.33s
+```
+👉 **Đánh giá:** 0 lỗi cú pháp, 0 lỗi TypeScript, Bundle tối ưu hóa chuẩn nén gzip.
+
+### 🌐 2. Kết Quả Kiểm Tra Kết Nối Mạng Thực Tế
+```powershell
+# Kiểm tra gọi API Backend
+curl http://localhost:3001/api/health
+# Trả về:
+{"status":"ok"}
+
+# Kiểm tra phản hồi cổng Frontend
+curl -I http://localhost:3000
+# Trả về:
+HTTP/1.1 200 OK
+```
+
+### 🖥️ 3. Xác Thực Bằng Trình Duyệt Tự Động
+- Trình duyệt ảo đã truy cập trực tiếp `http://localhost:3000`.
+- Giao diện nạp đầy đủ các thành phần SVG, hình ảnh 3D và font chữ.
+- Thẻ trạng thái kết nối chuyển đổi sang **`Backend Connected`** ngay khi nhận phản hồi từ Backend port 3001.
 
 ---
-*Báo cáo được khởi tạo tự động bởi hệ thống trợ lý Antigravity AI.*
+
+## 7. QUẢN LÝ PHIÊN BẢN GIT
+
+> [!TIP]
+> Tất cả các thay đổi mã nguồn và báo cáo đều được commit với quy chuẩn Git Conventional Commits và đồng bộ lên remote GitHub.
+
+- **Remote URL:** `https://github.com/macchu25/job.git`
+- **Nhánh:** `main`
+- **Lịch sử Commit:**
+  - `ed88d04`: *feat: initialize Web HMI package sorting system baseline with standard dashboard UI*
+  - `5545287`: *docs: add detailed task report file docs/TASK_01_INITIALIZE_PROJECT.md*
+
+---
+
+<div align="center">
+  <sub>Hệ thống tự động biên soạn bởi Trợ lý Antigravity AI • Ngày báo cáo: 25/09/2026</sub>
+</div>
