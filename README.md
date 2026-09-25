@@ -14,8 +14,12 @@ Dự án Web HMI dành cho hệ thống phân loại hàng công nghiệp.
 ## 📁 Cấu trúc dự án (Project Structure)
 
 ```text
-project/
+job/
+├── docs/              # Báo cáo chi tiết sau mỗi task
+│   └── TASK_01_INITIALIZE_PROJECT.md
 ├── frontend/          # Web HMI Frontend UI (Vite + React + Tailwind CSS)
+│   ├── public/
+│   │   └── isometric_sorting_plant.jpg
 │   ├── src/
 │   │   ├── App.tsx
 │   │   ├── main.tsx
@@ -74,15 +78,6 @@ Sau khi chạy thành công:
 
 ---
 
-## 🖥️ Kiểm Tra Trạng Thái Kết Nối
+## 📑 Danh Sách Báo Cáo Task (Task Reports)
 
-Khi mở giao diện Frontend tại `http://localhost:3000`, màn hình HMI sẽ tự động gọi API `GET http://localhost:3001/api/health`. Khi thành công, thẻ trạng thái sẽ hiển thị:
-
-> **`Backend Connected`**
-
----
-
-## 📌 Ghi Chú Phát Triển
-
-- Baseline nền tảng hệ thống đã hoàn tất.
-- Các mô-đun kết nối PLC, Simulation, và giao diện điều khiển chi tiết sẽ được phát triển trong các giai đoạn tiếp theo.
+- 📘 [Báo Cáo Chi Tiết Task 01: Khởi Tạo Dự Án & Baseline HMI Dashboard](docs/TASK_01_INITIALIZE_PROJECT.md)
