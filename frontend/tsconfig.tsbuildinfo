@@ -1,1 +1,1 @@
-{"root":["./src/app.tsx","./src/main.tsx","./src/vite-env.d.ts"],"version":"5.9.3"}
+{"root":["./src/app.tsx","./src/main.tsx","./src/vite-env.d.ts","./src/components/activitylog.tsx","./src/components/binfillchart.tsx","./src/components/binstatustable.tsx","./src/components/kpicard.tsx","./src/components/processoverview.tsx","./src/components/sidebar.tsx","./src/components/statusbadge.tsx","./src/components/topbar.tsx","./src/data/mockdata.ts","./src/pages/dashboard.tsx"],"version":"5.9.3"}
